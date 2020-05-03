@@ -15,10 +15,10 @@ class Middleware
      */
     public function handle($request, Closure $next)
     {
-        if (!config('https.enabled')) {
+        if (!config('https.enabled') || $request->secure()) {
             return $next($request);
         }
 
-        // TODO
+        return redirect()->secure($request->getRequestUri());
     }
 }
